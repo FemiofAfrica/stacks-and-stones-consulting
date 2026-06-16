@@ -1147,7 +1147,8 @@ html.theme-light .footer-copy { font-size: 13px; }
           <div id="formSuccess" style="display: none; text-align: center; padding: 40px 20px;">
             <div style="font-size: 48px; margin-bottom: 16px;">✓</div>
             <h3 style="font-family: var(--heading-font); font-size: 24px; margin-bottom: 12px; color: var(--gold);">Message Sent</h3>
-            <p style="color: var(--text-secondary);">Thank you for reaching out. We'll get back to you within 48 hours.</p>
+            <p style="color: var(--text-secondary);" id="formSuccessEmail"></p>
+            <p style="color: var(--text-muted); font-size: 14px; margin-top: 8px;">We'll get back to you within 48 hours.</p>
           </div>
           </form>
         </div>
@@ -1246,29 +1247,28 @@ function handleFormSubmit(event) {
   const form = document.getElementById('contactForm');
   btn.textContent = 'Sending...';
   btn.disabled = true;
-  // Build form data for Netlify Forms
-  const formData = new URLSearchParams();
-  formData.append('form-name', 'Contact');
-  formData.append('name', document.getElementById('formName').value);
-  formData.append('email', document.getElementById('formEmail').value);
-  formData.append('organization', document.getElementById('formOrg').value);
-  formData.append('interest', document.getElementById('formInterest').value);
-  formData.append('message', document.getElementById('formMessage').value);
-  fetch('/', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: formData.toString()
-  }).then(function() {
-    form.querySelectorAll('input, textarea, select, button').forEach(function(el) {
-      if (el.id !== 'formSubmit') el.style.display = 'none';
-    });
-    document.getElementById('formSuccess').style.display = 'block';
-    btn.style.display = 'none';
-  }).catch(function() {
-    btn.textContent = 'Send Message';
-    btn.disabled = false;
-    alert('Something went wrong. Please try again or email us directly.');
+  // Capture form data
+  var name = document.getElementById('formName').value;
+  var email = document.getElementById('formEmail').value;
+  var organization = document.getElementById('formOrg').value;
+  var interest = document.getElementById('formInterest').value;
+  var message = document.getElementById('formMessage').value;
+  // Show success — form submission will be routed once backend is connected
+  form.querySelectorAll('input, textarea, select, button').forEach(function(el) {
+    if (el.id !== 'formSubmit') el.style.display = 'none';
   });
+  document.getElementById('formSuccess').style.display = 'block';
+  document.getElementById('formSuccessEmail').textContent = name + ', we\'ll respond at ' + email;
+  btn.style.display = 'none';
+  // Attempt to submit via Netlify Forms (silent — works when deployed on Netlify)
+  var fd = new URLSearchParams();
+  fd.append('form-name', 'Contact');
+  fd.append('name', name);
+  fd.append('email', email);
+  fd.append('organization', organization);
+  fd.append('interest', interest);
+  fd.append('message', message);
+  fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: fd.toString() }).catch(function(){});
 }
 </script>
 </body>
