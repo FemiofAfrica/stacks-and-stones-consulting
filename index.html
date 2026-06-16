@@ -1,0 +1,1275 @@
+<!DOCTYPE html>
+<html lang="en" class="theme-dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Stacks and Stones Consulting</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ===== DARK THEME (default) ===== */
+html.theme-dark {
+  --bg-primary: #0A0A0A;
+  --bg-secondary: #111111;
+  --bg-card: #181818;
+  --bg-card-hover: #1E1E1E;
+  --gold: #C8A44E;
+  --gold-light: #E8D5A3;
+  --gold-dark: #A8882E;
+  --gold-glow: rgba(200, 164, 78, 0.15);
+  --text-primary: #F0EDE6;
+  --text-secondary: #B8B0A0;
+  --text-muted: #7A7568;
+  --border: #2A2824;
+  --border-gold: rgba(200, 164, 78, 0.3);
+  --heading-font: 'Playfair Display', serif;
+  --body-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --btn-primary-color: #0A0A0A;
+  --btn-border-radius: 4px;
+  --card-border-radius: 8px;
+  --service-card-bg-hover: var(--bg-card-hover);
+  --mobile-nav-bg: rgba(10,10,10,0.98);
+  --hero-bg: var(--bg-primary);
+  --section-alt-bg: var(--bg-secondary);
+  --footer-bg: transparent;
+  --toggle-bg: #2A2824;
+  --toggle-active: var(--gold);
+}
+
+/* ===== LIGHT THEME ===== */
+html.theme-light {
+  --bg-primary: #FAF8F5;
+  --bg-secondary: #FFFFFF;
+  --bg-card: #FFFFFF;
+  --bg-card-hover: #F5F3F0;
+  --gold: #C8A44E;
+  --gold-light: #F0E8D0;
+  --gold-dark: #A8882E;
+  --gold-glow: rgba(200, 164, 78, 0.1);
+  --text-primary: #1C1C1C;
+  --text-secondary: #6B6560;
+  --text-muted: #9A9490;
+  --border: #E8E4DE;
+  --border-gold: #D4C4A0;
+  --heading-font: 'DM Serif Display', serif;
+  --body-font: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --btn-primary-color: #FFF;
+  --btn-border-radius: 6px;
+  --card-border-radius: 12px;
+  --service-card-bg-hover: #F5F3F0;
+  --mobile-nav-bg: rgba(250,248,245,0.98);
+  --hero-bg: var(--bg-secondary);
+  --section-alt-bg: var(--bg-secondary);
+  --footer-bg: var(--bg-secondary);
+  --toggle-bg: #E8E4DE;
+  --toggle-active: var(--gold);
+}
+
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--body-font);
+  -webkit-font-smoothing: antialiased;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  transition: background 0.4s ease, color 0.4s ease;
+}
+
+/* Transition for themed elements */
+nav, .service-card, .partner-card, .program-section, .value-item, .service-sub-link,
+.btn-primary, .btn-secondary, .contact-info-item, footer, .hero, .dark-section,
+.program-card, input, textarea, select {
+  transition: background 0.4s ease, color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+/* Navigation */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  background: rgba(10, 10, 10, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  z-index: 1000;
+  padding: 0 48px;
+}
+html.theme-light nav {
+  background: rgba(250, 248, 245, 0.95);
+}
+.nav-inner {
+  max-width: 1280px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+  height: 68px;
+}
+html.theme-light .nav-inner { height: 72px; }
+.nav-logo {
+  font-family: var(--heading-font);
+  font-size: 20px; font-weight: 600;
+  color: var(--text-primary);
+  text-decoration: none;
+  letter-spacing: -0.3px;
+  cursor: pointer;
+}
+html.theme-light .nav-logo {
+  font-size: 22px; letter-spacing: -0.5px;
+}
+.nav-logo span { color: var(--gold); }
+.nav-links { display: flex; align-items: center; gap: 32px; }
+html.theme-light .nav-links { gap: 28px; }
+.nav-links a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  font-size: 13px; font-weight: 500;
+  letter-spacing: 1px; text-transform: uppercase;
+  transition: color 0.2s;
+  cursor: pointer;
+}
+html.theme-light .nav-links a {
+  font-size: 14px; letter-spacing: 0; text-transform: none;
+}
+.nav-links a:hover, .nav-links a.active { color: var(--gold); }
+html.theme-light .nav-links a:hover, html.theme-light .nav-links a.active { color: var(--gold-dark); }
+
+.nav-cta {
+  background: var(--gold);
+  color: var(--btn-primary-color) !important;
+  padding: 8px 20px;
+  border-radius: var(--btn-border-radius);
+  font-weight: 600 !important;
+  font-size: 12px !important;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+html.theme-light .nav-cta {
+  padding: 10px 24px; font-size: 13px !important;
+}
+.nav-cta:hover { background: var(--gold-light); }
+html.theme-light .nav-cta:hover { background: var(--gold-dark); }
+
+/* Theme toggle in nav */
+.theme-toggle {
+  display: flex; align-items: center; gap: 8px;
+  background: none; border: none; cursor: pointer;
+  padding: 6px 10px;
+  border-radius: 20px;
+  color: var(--text-secondary);
+  font-size: 16px;
+  transition: color 0.2s, background 0.2s;
+  margin-left: 8px;
+}
+.theme-toggle:hover {
+  color: var(--gold);
+  background: var(--toggle-bg);
+}
+.theme-toggle-label {
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.5px; text-transform: uppercase;
+}
+
+/* Page wrapper */
+.page { display: none; }
+.page.active { display: block; }
+
+/* Hero */
+.hero {
+  min-height: 100vh;
+  display: flex; align-items: center;
+  padding: 120px 48px 80px;
+  position: relative;
+  overflow: hidden;
+  background: var(--hero-bg);
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -40%; right: -20%;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, var(--gold-glow) 0%, transparent 70%);
+  pointer-events: none;
+}
+html.theme-light .hero::before {
+  top: -30%; right: -15%;
+  width: 500px; height: 500px;
+}
+html.theme-light .hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-gold), transparent);
+}
+.hero-inner {
+  max-width: 1280px; margin: 0 auto;
+  width: 100%;
+  position: relative; z-index: 1;
+}
+html.theme-light .hero-inner { max-width: 1200px; }
+.hero-tag {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+}
+html.theme-light .hero-tag {
+  display: inline-block;
+  font-size: 12px; letter-spacing: 2px;
+  background: var(--gold-glow);
+  padding: 6px 16px;
+  border-radius: 20px;
+}
+.hero h1 {
+  font-family: var(--heading-font);
+  font-size: 64px; font-weight: 600;
+  line-height: 1.1;
+  margin-bottom: 28px;
+  max-width: 800px;
+}
+html.theme-light .hero h1 {
+  font-size: 60px; font-weight: 400;
+  max-width: 750px;
+}
+.hero h1 em { color: var(--gold); font-style: normal; }
+html.theme-light .hero h1 em { font-style: italic; }
+.hero p {
+  font-size: 18px; color: var(--text-secondary);
+  max-width: 560px;
+  line-height: 1.7;
+  margin-bottom: 40px;
+}
+html.theme-light .hero p { max-width: 520px; margin-bottom: 36px; }
+.hero-actions { display: flex; gap: 16px; }
+
+/* Buttons */
+.btn-primary {
+  background: var(--gold);
+  color: var(--btn-primary-color);
+  padding: 14px 32px;
+  border: none; border-radius: var(--btn-border-radius);
+  font-size: 13px; font-weight: 600;
+  letter-spacing: 1px; text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+  text-decoration: none;
+  display: inline-block;
+}
+html.theme-light .btn-primary { font-size: 14px; letter-spacing: 0; text-transform: none; }
+.btn-primary:hover { background: var(--gold-light); }
+html.theme-light .btn-primary:hover { background: var(--gold-dark); }
+.btn-secondary {
+  background: transparent;
+  color: var(--text-primary);
+  padding: 14px 32px;
+  border: 1px solid var(--border);
+  border-radius: var(--btn-border-radius);
+  font-size: 13px; font-weight: 500;
+  letter-spacing: 1px; text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-block;
+}
+html.theme-light .btn-secondary { font-size: 14px; letter-spacing: 0; text-transform: none; }
+.btn-secondary:hover { border-color: var(--gold); color: var(--gold); }
+html.theme-light .btn-secondary:hover { border-color: var(--gold); color: var(--gold-dark); }
+
+/* Hero Stats */
+.hero-stats {
+  display: flex; gap: 48px;
+  margin-top: 64px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+}
+html.theme-light .hero-stats { gap: 40px; }
+.hero-stat-value {
+  font-family: var(--heading-font);
+  font-size: 36px; color: var(--gold);
+}
+.hero-stat-label { font-size: 13px; color: var(--text-muted); margin-top: 4px; }
+
+/* Section common */
+.section { padding: 100px 48px; }
+.section-alt { background: var(--section-alt-bg); }
+.section-inner { max-width: 1280px; margin: 0 auto; }
+html.theme-light .section-inner { max-width: 1200px; }
+.section-label {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 16px;
+}
+html.theme-light .section-label {
+  font-size: 12px; letter-spacing: 2px;
+  color: var(--gold-dark);
+  margin-bottom: 12px;
+}
+.section-title {
+  font-family: var(--heading-font);
+  font-size: 40px; font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 20px;
+}
+html.theme-light .section-title {
+  font-size: 38px; font-weight: 400;
+  margin-bottom: 16px;
+}
+.section-text {
+  font-size: 16px; color: var(--text-secondary);
+  max-width: 640px;
+  line-height: 1.7;
+}
+html.theme-light .section-text { max-width: 600px; }
+.section-header { margin-bottom: 60px; }
+html.theme-light .section-header { margin-bottom: 56px; }
+
+/* Services Grid */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+html.theme-light .services-grid {
+  gap: 24px;
+  background: transparent; border: none;
+}
+.service-card {
+  background: var(--bg-card);
+  padding: 48px 36px;
+  transition: background 0.3s;
+  cursor: pointer;
+}
+html.theme-light .service-card {
+  background: var(--bg-primary);
+  border: 1px solid var(--border);
+  border-radius: var(--card-border-radius);
+  padding: 40px 32px;
+}
+.service-card:hover { background: var(--service-card-bg-hover); }
+html.theme-light .service-card:hover {
+  border-color: var(--border-gold);
+  box-shadow: 0 4px 20px rgba(200, 164, 78, 0.08);
+  transform: translateY(-2px);
+}
+.service-card-icon {
+  width: 48px; height: 48px;
+  border: 1px solid var(--border-gold);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 24px;
+  font-size: 20px;
+}
+html.theme-light .service-card-icon {
+  width: 44px; height: 44px;
+  background: var(--gold-glow);
+  border-radius: 10px;
+  border: none;
+  margin-bottom: 20px;
+  font-size: 18px;
+}
+.service-card h3 {
+  font-family: var(--heading-font);
+  font-size: 22px; font-weight: 500;
+  margin-bottom: 12px;
+}
+html.theme-light .service-card h3 {
+  font-weight: 400;
+  margin-bottom: 10px;
+}
+.service-card p {
+  font-size: 14px; color: var(--text-secondary);
+  line-height: 1.6;
+}
+.service-card .learn-more {
+  display: inline-block;
+  margin-top: 20px;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 1px; text-transform: uppercase;
+  color: var(--gold);
+  text-decoration: none;
+}
+html.theme-light .service-card .learn-more {
+  margin-top: 16px;
+  font-size: 13px; letter-spacing: 0; text-transform: none;
+  color: var(--gold-dark);
+}
+
+/* Partners Grid */
+.partners-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+html.theme-light .partners-grid { gap: 20px; }
+.partner-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--card-border-radius);
+  padding: 36px 28px;
+  text-align: center;
+  transition: all 0.3s;
+}
+html.theme-light .partner-card {
+  background: var(--bg-secondary);
+  border-radius: var(--card-border-radius);
+  padding: 32px 24px;
+}
+.partner-card:hover {
+  border-color: var(--border-gold);
+  transform: translateY(-2px);
+}
+html.theme-light .partner-card:hover {
+  box-shadow: 0 4px 16px rgba(200, 164, 78, 0.06);
+}
+.partner-avatar {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: var(--gold-glow);
+  border: 2px solid var(--border-gold);
+  margin: 0 auto 20px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--heading-font);
+  font-size: 28px; color: var(--gold);
+  transition: background 0.4s ease, border-color 0.4s ease;
+}
+html.theme-light .partner-avatar {
+  width: 72px; height: 72px;
+  margin-bottom: 16px;
+  font-size: 26px; color: var(--gold-dark);
+}
+.partner-card h4 { font-size: 16px; font-weight: 600; margin-bottom: 4px; }
+html.theme-light .partner-card h4 { margin-bottom: 2px; }
+.partner-card .role {
+  font-size: 12px; color: var(--gold);
+  font-weight: 500; letter-spacing: 1px; text-transform: uppercase;
+  margin-bottom: 12px;
+}
+html.theme-light .partner-card .role {
+  color: var(--gold-dark); letter-spacing: 0; text-transform: none;
+}
+.partner-card p {
+  font-size: 13px; color: var(--text-muted);
+  line-height: 1.5;
+}
+html.theme-light .partner-card p { color: var(--text-secondary); }
+
+/* Upcoming Program */
+.program-section {
+  background: linear-gradient(135deg, var(--bg-secondary) 0%, #0A0A0A 100%);
+  border: 1px solid var(--border-gold);
+  border-radius: 12px;
+  padding: 64px;
+  display: flex;
+  align-items: center;
+  gap: 60px;
+}
+html.theme-light .program-section {
+  background: var(--bg-dark-secondary, #252322);
+  border: 1px solid var(--border-dark, #3A3835);
+  padding: 56px;
+  border-radius: 16px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.program-content { flex: 1; }
+.program-badge {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--btn-primary-color);
+  font-size: 10px; font-weight: 700;
+  letter-spacing: 2px; text-transform: uppercase;
+  padding: 6px 14px;
+  border-radius: 3px;
+  margin-bottom: 20px;
+}
+html.theme-light .program-badge {
+  color: #FFF;
+  font-size: 11px; letter-spacing: 2px;
+  padding: 6px 16px;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+.program-content h3 {
+  font-family: var(--heading-font);
+  font-size: 32px; font-weight: 600;
+  margin-bottom: 16px;
+}
+html.theme-light .program-content h3 {
+  font-size: 30px; font-weight: 400;
+  color: var(--text-on-dark, #EDE8E0);
+  margin-bottom: 12px;
+}
+.program-content p {
+  font-size: 15px; color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 24px;
+}
+html.theme-light .program-content p {
+  color: var(--text-on-dark-secondary, #A09890);
+  margin-bottom: 20px;
+}
+.program-date {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 14px; color: var(--gold);
+}
+html.theme-light .program-date { font-weight: 500; }
+.program-date strong { font-weight: 600; }
+.program-visual {
+  width: 200px; height: 200px;
+  border: 1px solid var(--border-gold);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-family: var(--heading-font);
+  font-size: 18px; color: var(--gold);
+  text-align: center;
+  line-height: 1.4;
+  position: relative;
+}
+.program-visual::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 1px solid rgba(200, 164, 78, 0.15);
+}
+html.theme-light .program-visual {
+  width: 180px; height: 180px;
+  border: 2px solid var(--gold);
+  background: rgba(200, 164, 78, 0.05);
+}
+html.theme-light .program-visual::before { display: none; }
+
+/* Dark section (light theme) */
+.dark-section {
+  background: transparent; padding: 0;
+}
+html.theme-light .dark-section {
+  background: var(--bg-dark, #1C1C1C);
+  padding: 100px 48px;
+}
+html.theme-light .dark-section .section-label { color: var(--gold); }
+html.theme-light .dark-section .section-title { color: var(--text-on-dark, #EDE8E0); }
+html.theme-light .dark-section .section-text { color: var(--text-on-dark-secondary, #A09890); }
+
+/* About page */
+.about-hero { padding: 160px 48px 80px; }
+html.theme-light .about-hero {
+  background: var(--bg-secondary);
+  padding: 160px 48px 60px;
+}
+.about-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+html.theme-light .about-content { gap: 60px; }
+.about-values {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-top: 48px;
+}
+html.theme-light .about-values { gap: 20px; }
+.value-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--card-border-radius);
+  padding: 28px;
+}
+html.theme-light .value-item {
+  background: var(--bg-secondary);
+  border-radius: 10px;
+}
+.value-item h4 {
+  font-family: var(--heading-font);
+  font-size: 18px; color: var(--gold);
+  margin-bottom: 8px;
+}
+html.theme-light .value-item h4 {
+  color: var(--gold-dark);
+}
+.value-item p {
+  font-size: 13px; color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+/* Contact page */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+}
+.form-group { margin-bottom: 20px; }
+.form-group label {
+  display: block;
+  font-size: 12px; font-weight: 600;
+  letter-spacing: 1px; text-transform: uppercase;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+}
+html.theme-light .form-group label {
+  font-size: 13px; letter-spacing: 0; text-transform: none;
+  margin-bottom: 6px;
+}
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--btn-border-radius);
+  padding: 14px 16px;
+  font-size: 15px;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-primary);
+  transition: border-color 0.2s, background 0.4s ease;
+}
+html.theme-light .form-group input,
+html.theme-light .form-group textarea,
+html.theme-light .form-group select {
+  background: var(--bg-secondary);
+  border-radius: 8px;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+html.theme-light .form-group input:focus,
+html.theme-light .form-group textarea:focus,
+html.theme-light .form-group select:focus {
+  box-shadow: 0 0 0 3px var(--gold-glow);
+}
+.form-group textarea { resize: vertical; min-height: 120px; }
+
+.contact-info { padding-top: 20px; }
+.contact-info-item {
+  margin-bottom: 32px;
+}
+html.theme-light .contact-info-item {
+  margin-bottom: 28px;
+  padding-bottom: 28px;
+  border-bottom: 1px solid var(--border);
+}
+html.theme-light .contact-info-item:last-child { border-bottom: none; }
+.contact-info-item h4 {
+  font-size: 11px; font-weight: 600;
+  letter-spacing: 2px; text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+html.theme-light .contact-info-item h4 {
+  font-size: 12px; letter-spacing: 1.5px;
+  color: var(--gold-dark);
+  margin-bottom: 6px;
+}
+.contact-info-item p {
+  font-size: 15px; color: var(--text-secondary);
+}
+
+/* Services sub-links */
+.services-sub-links {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  max-width: 900px;
+  margin-top: 40px;
+}
+html.theme-light .services-sub-links { max-width: 900px; }
+.service-sub-link {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--card-border-radius);
+  padding: 28px;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+html.theme-light .service-sub-link {
+  background: var(--bg-secondary);
+  border-radius: var(--card-border-radius);
+  padding: 32px;
+}
+.service-sub-link:hover {
+  border-color: var(--border-gold);
+  background: var(--service-card-bg-hover);
+}
+html.theme-light .service-sub-link:hover {
+  box-shadow: 0 4px 16px rgba(200, 164, 78, 0.06);
+}
+.service-sub-link h4 {
+  font-family: var(--heading-font);
+  font-size: 20px; margin-bottom: 8px;
+}
+.service-sub-link p {
+  font-size: 13px; color: var(--text-secondary);
+  line-height: 1.5;
+}
+html.theme-light .service-sub-link p { font-size: 14px; }
+
+/* Footer */
+footer {
+  border-top: 1px solid var(--border);
+  padding: 48px;
+  text-align: center;
+  background: var(--footer-bg);
+}
+.footer-inner { max-width: 1280px; margin: 0 auto; }
+html.theme-light .footer-inner { max-width: 1200px; }
+.footer-logo {
+  font-family: var(--heading-font);
+  font-size: 20px; font-weight: 600;
+  margin-bottom: 16px;
+}
+html.theme-light .footer-logo { font-weight: 400; }
+.footer-logo span { color: var(--gold); }
+.footer-links { display: flex; justify-content: center; gap: 28px; margin-bottom: 24px; }
+html.theme-light .footer-links { gap: 24px; margin-bottom: 20px; }
+.footer-links a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 13px;
+  transition: color 0.2s;
+  cursor: pointer;
+}
+html.theme-light .footer-links a { font-size: 14px; }
+.footer-links a:hover { color: var(--gold); }
+html.theme-light .footer-links a:hover { color: var(--gold-dark); }
+.footer-copy { font-size: 12px; color: var(--text-muted); }
+html.theme-light .footer-copy { font-size: 13px; }
+
+/* Mobile nav */
+.mobile-toggle { display: none; }
+@media (max-width: 860px) {
+  nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .nav-links.open {
+    display: flex; flex-direction: column;
+    position: fixed; top: 68px; left: 0; right: 0;
+    background: var(--mobile-nav-bg);
+    padding: 24px; gap: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+  html.theme-light .nav-links.open { top: 72px; }
+  .mobile-toggle {
+    display: block;
+    background: none; border: none;
+    color: var(--text-primary);
+    font-size: 24px; cursor: pointer;
+    padding: 8px;
+  }
+  .hero { padding: 100px 20px 60px; }
+  .hero h1 { font-size: 36px; }
+  html.theme-light .hero h1 { font-size: 34px; }
+  .hero-stats { flex-direction: column; gap: 24px; }
+  html.theme-light .hero-stats { gap: 20px; }
+  .services-grid { grid-template-columns: 1fr; }
+  .partners-grid { grid-template-columns: 1fr 1fr; }
+  .program-section { flex-direction: column; padding: 36px; text-align: center; }
+  html.theme-light .program-section { flex-direction: column; padding: 36px; text-align: center; }
+  .about-content { grid-template-columns: 1fr; gap: 40px; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .section { padding: 60px 20px; }
+  html.theme-light .dark-section { padding: 60px 20px; }
+  .services-sub-links { grid-template-columns: 1fr; }
+  .about-values { grid-template-columns: 1fr; }
+  .about-hero { padding: 120px 20px 40px; }
+  html.theme-light .about-hero { padding: 120px 20px 40px; }
+  .hero-actions { flex-direction: column; }
+}
+@media (max-width: 600px) {
+  .partners-grid { grid-template-columns: 1fr; }
+  .hero h1 { font-size: 28px; }
+  .section-title { font-size: 28px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="nav-inner">
+    <a class="nav-logo" onclick="showPage('home')">Stacks & <span>Stones</span></a>
+    <div class="nav-links" id="navLinks">
+      <a class="active" onclick="showPage('home')">Home</a>
+      <a onclick="showPage('about')">About</a>
+      <a onclick="showPage('services')">Services</a>
+      <a onclick="showPage('contact')">Contact</a>
+      <a class="nav-cta" onclick="showPage('contact')">Get in Touch</a>
+      <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle theme">
+        <span id="themeIcon">☀️</span>
+        <span class="theme-toggle-label" id="themeLabel">Light</span>
+      </button>
+    </div>
+    <button class="mobile-toggle" onclick="document.getElementById('navLinks').classList.toggle('open')">☰</button>
+  </div>
+</nav>
+
+<!-- HOME PAGE -->
+<div class="page active" id="page-home">
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-tag">Knowledge Consulting</div>
+      <h1>Turning insight into <em>impact</em>.<br>Building for the <em>knowledge economy</em>.</h1>
+      <p>Stacks and Stones Consulting partners with organizations to master artificial intelligence, automation, and digital transformation — equipping teams with the knowledge to lead.</p>
+      <div class="hero-actions">
+        <a class="btn-primary" onclick="showPage('services')">Explore Services</a>
+        <a class="btn-secondary" onclick="showPage('contact')">Book a Consultation</a>
+      </div>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-value">5</div>
+          <div class="hero-stat-label">Practice Areas</div>
+        </div>
+        <div>
+          <div class="hero-stat-value">4</div>
+          <div class="hero-stat-label">Senior Partners</div>
+        </div>
+        <div>
+          <div class="hero-stat-value">Jul 25</div>
+          <div class="hero-stat-label">Next Program</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Preview -->
+  <section class="section section-alt">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-label">What We Do</div>
+        <h2 class="section-title">Expertise across the<br>knowledge economy</h2>
+        <p class="section-text">Five practice areas where we deliver measurable outcomes through education, strategy, and hands-on implementation.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-card-icon">✦</div>
+          <h3>Artificial Intelligence</h3>
+          <p>AI strategy, model selection, deployment pipelines, and team upskilling. We help you adopt AI that actually works for your context.</p>
+          <a class="learn-more" onclick="showPage('services')">Learn More →</a>
+        </div>
+        <div class="service-card">
+          <div class="service-card-icon">⚡</div>
+          <h3>Automation</h3>
+          <p>Workflow automation, process optimization, and intelligent orchestration. Reduce manual effort and accelerate operations.</p>
+          <a class="learn-more" onclick="showPage('services')">Learn More →</a>
+        </div>
+        <div class="service-card">
+          <div class="service-card-icon">⟳</div>
+          <h3>AI Transformation</h3>
+          <p>Enterprise-wide AI adoption programs. From readiness assessment to change management and capability building.</p>
+          <a class="learn-more" onclick="showPage('services')">Learn More →</a>
+        </div>
+        <div class="service-card">
+          <div class="service-card-icon">⊞</div>
+          <h3>AI Product Management</h3>
+          <p>Product strategy at the intersection of AI and user needs. Roadmaps, prioritization, and cross-functional AI product delivery.</p>
+          <a class="learn-more" onclick="showPage('services')">Learn More →</a>
+        </div>
+        <div class="service-card">
+          <div class="service-card-icon">◎</div>
+          <h3>Digital Wellness</h3>
+          <p>Sustainable technology practices for individuals and teams. Balance productivity with wellbeing in an AI-augmented workplace.</p>
+          <a class="learn-more" onclick="showPage('services')">Learn More →</a>
+        </div>
+        <div class="service-card" style="background: linear-gradient(135deg, rgba(200,164,78,0.08) 0%, var(--bg-card) 100%);" onclick="showPage('contact')">
+          <div class="service-card-icon" style="border-color: var(--gold);">→</div>
+          <h3 style="color: var(--gold);">Not Sure Where to Start?</h3>
+          <p>Schedule a discovery session. We'll assess your needs and recommend the right path forward. No commitment required.</p>
+          <a class="learn-more" onclick="showPage('contact')">Get Started →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Partners Preview -->
+  <section class="section">
+    <div class="section-inner">
+      <div class="section-header">
+        <div class="section-label">Our Partners</div>
+        <h2 class="section-title">Built by practitioners,<br>not consultants</h2>
+        <p class="section-text">Every partner at Stacks and Stones brings deep hands-on experience in their domain. We don't just advise — we build, teach, and ship.</p>
+      </div>
+      <div class="partners-grid">
+        <div class="partner-card">
+          <div class="partner-avatar">TA</div>
+          <h4>Taiye Alafin</h4>
+          <div class="role">Partner</div>
+          <p>AI strategy and enterprise transformation. Deep expertise in building AI-ready organizations.</p>
+        </div>
+        <div class="partner-card">
+          <div class="partner-avatar">SA</div>
+          <h4>Samuel Femi Ajayi</h4>
+          <div class="role">Partner</div>
+          <p>Automation and AI product management. Product-minded engineer specializing in operational AI.</p>
+        </div>
+        <div class="partner-card">
+          <div class="partner-avatar">TO</div>
+          <h4>Tosin Olabode</h4>
+          <div class="role">Partner</div>
+          <p>Digital wellness and human-centered technology. Designing systems that work for people.</p>
+        </div>
+        <div class="partner-card">
+          <div class="partner-avatar">FN</div>
+          <h4>Femi N.</h4>
+          <div class="role">Partner</div>
+          <p>AI transformation and knowledge programs. Building the bridge between technical capability and business outcomes.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Upcoming Program -->
+  <section class="dark-section">
+    <div class="section-inner">
+      <div class="program-section" style="margin-top: 0;">
+        <div class="program-content">
+          <div class="program-badge">Upcoming Program</div>
+          <h3>TINC with AI<br>Live Workshop</h3>
+          <p>An intensive, hands-on workshop designed for professionals and organizations ready to master AI-powered workflows. Limited seats available.</p>
+          <div class="program-date">📅 <strong>July 25, 2026</strong> — Abuja, Nigeria</div>
+        </div>
+        <div class="program-visual">
+          TINC<br>with AI
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">Stacks & <span>Stones</span></div>
+      <div class="footer-links">
+        <a onclick="showPage('home')">Home</a>
+        <a onclick="showPage('about')">About</a>
+        <a onclick="showPage('services')">Services</a>
+        <a onclick="showPage('contact')">Contact</a>
+      </div>
+      <div class="footer-copy">© 2026 Stacks and Stones Consulting. All rights reserved.</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ABOUT PAGE -->
+<div class="page" id="page-about">
+  <section class="about-hero" style="min-height: auto;">
+    <div class="hero-inner">
+      <div class="hero-tag">About Us</div>
+      <h1>Knowledge that <em>endures</em>.</h1>
+      <p style="max-width: 600px;">We are a collective of practitioners turned educators, united by a conviction that the knowledge economy belongs to those who build it.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="section-inner">
+      <div class="about-content">
+        <div>
+          <div class="section-label">Our Mission</div>
+          <h2 class="section-title" style="font-size: 32px;">Equipping organizations<br>for the AI era</h2>
+          <p class="section-text">Stacks and Stones Consulting exists to close the gap between technological possibility and organizational readiness. We believe that sustainable advantage comes not from buying AI, but from building the knowledge and capability to wield it effectively.</p>
+        </div>
+        <div>
+          <div class="section-label">Our Approach</div>
+          <h2 class="section-title" style="font-size: 32px;">Education-first,<br>implementation-always</h2>
+          <p class="section-text">Every engagement combines structured learning with hands-on application. Our programs are designed so that knowledge sticks — because your team doesn't just hear about it, they build with it.</p>
+        </div>
+      </div>
+
+      <div class="about-values">
+        <div class="value-item">
+          <h4>Depth Over Breadth</h4>
+          <p>We go deep into each practice area rather than spreading thin. Mastery before scale.</p>
+        </div>
+        <div class="value-item">
+          <h4>Build to Transfer</h4>
+          <p>Every engagement leaves your team more capable than when we started. Knowledge transfer is the deliverable.</p>
+        </div>
+        <div class="value-item">
+          <h4>Practitioners First</h4>
+          <p>Our partners have built, shipped, and operated what they teach. No theory without practice.</p>
+        </div>
+        <div class="value-item">
+          <h4>Context Matters</h4>
+          <p>No cookie-cutter programs. Every engagement is shaped to your organization's reality, constraints, and goals.</p>
+        </div>
+      </div>
+
+      <div style="margin-top: 80px;">
+        <div class="section-label" style="margin-bottom: 32px;">Our Partners</div>
+        <div class="partners-grid">
+          <div class="partner-card">
+            <div class="partner-avatar">TA</div>
+            <h4>Taiye Alafin</h4>
+            <div class="role">Partner, AI & Transformation</div>
+            <p>Over a decade of experience in enterprise AI adoption, strategy, and organizational change management.</p>
+          </div>
+          <div class="partner-card">
+            <div class="partner-avatar">SA</div>
+            <h4>Samuel Femi Ajayi</h4>
+            <div class="role">Partner, Automation & AI Products</div>
+            <p>Engineering leader specializing in AI-powered automation, product management, and operational efficiency.</p>
+          </div>
+          <div class="partner-card">
+            <div class="partner-avatar">TO</div>
+            <h4>Tosin Olabode</h4>
+            <div class="role">Partner, Digital Wellness</div>
+            <p>Human-centered technologist designing sustainable digital practices for high-performance teams.</p>
+          </div>
+          <div class="partner-card">
+            <div class="partner-avatar">FN</div>
+            <h4>Femi N.</h4>
+            <div class="role">Partner, AI Transformation</div>
+            <p>AI transformation specialist building knowledge programs that turn technical capability into business outcomes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">Stacks & <span>Stones</span></div>
+      <div class="footer-links">
+        <a onclick="showPage('home')">Home</a>
+        <a onclick="showPage('about')">About</a>
+        <a onclick="showPage('services')">Services</a>
+        <a onclick="showPage('contact')">Contact</a>
+      </div>
+      <div class="footer-copy">© 2026 Stacks and Stones Consulting. All rights reserved.</div>
+    </div>
+  </footer>
+</div>
+
+<!-- SERVICES PAGE -->
+<div class="page" id="page-services">
+  <section class="about-hero" style="min-height: auto;">
+    <div class="hero-inner">
+      <div class="hero-tag">Our Services</div>
+      <h1>Five practice areas.<br><em>One mission</em>.</h1>
+      <p style="max-width: 600px;">End-to-end capability building across the disciplines that define the knowledge economy.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="section-inner">
+      <div class="services-sub-links">
+        <div class="service-sub-link">
+          <h4 style="color: var(--gold);">✦ Artificial Intelligence</h4>
+          <p>AI readiness assessments, model selection and deployment, custom solution architecture, and team upskilling programs. We help you navigate the AI landscape with clarity and practical execution.</p>
+          <a class="learn-more" onclick="showPage('contact')" style="display: inline-block; margin-top: 12px;">Book a Consultation →</a>
+        </div>
+        <div class="service-sub-link">
+          <h4 style="color: var(--gold);">⚡ Automation</h4>
+          <p>Workflow analysis and optimization, robotic process automation, intelligent document processing, and end-to-end automation strategy. Reduce operational friction and free your team for higher-value work.</p>
+          <a class="learn-more" onclick="showPage('contact')" style="display: inline-block; margin-top: 12px;">Book a Consultation →</a>
+        </div>
+        <div class="service-sub-link">
+          <h4 style="color: var(--gold);">⟳ AI Transformation</h4>
+          <p>Enterprise AI adoption roadmaps, change management, capability maturity assessment, and transformation program design. We guide organizations from AI curiosity to AI capability.</p>
+          <a class="learn-more" onclick="showPage('contact')" style="display: inline-block; margin-top: 12px;">Book a Consultation →</a>
+        </div>
+        <div class="service-sub-link">
+          <h4 style="color: var(--gold);">⊞ AI Product Management</h4>
+          <p>AI product strategy and roadmapping, cross-functional team structuring, build-vs-buy analysis, and AI-feature delivery. Bring AI-powered products to market with confidence.</p>
+          <a class="learn-more" onclick="showPage('contact')" style="display: inline-block; margin-top: 12px;">Book a Consultation →</a>
+        </div>
+        <div class="service-sub-link">
+          <h4 style="color: var(--gold);">◎ Digital Wellness</h4>
+          <p>Digital wellness audits, sustainable technology practice design, team productivity and wellbeing programs, and AI-era work architecture. Build technology habits that last.</p>
+          <a class="learn-more" onclick="showPage('contact')" style="display: inline-block; margin-top: 12px;">Book a Consultation →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">Stacks & <span>Stones</span></div>
+      <div class="footer-links">
+        <a onclick="showPage('home')">Home</a>
+        <a onclick="showPage('about')">About</a>
+        <a onclick="showPage('services')">Services</a>
+        <a onclick="showPage('contact')">Contact</a>
+      </div>
+      <div class="footer-copy">© 2026 Stacks and Stones Consulting. All rights reserved.</div>
+    </div>
+  </footer>
+</div>
+
+<!-- CONTACT PAGE -->
+<div class="page" id="page-contact">
+  <section class="about-hero" style="min-height: auto;">
+    <div class="hero-inner">
+      <div class="hero-tag">Get in Touch</div>
+      <h1>Let's build something<br><em>together</em>.</h1>
+      <p style="max-width: 500px;">Tell us about your organization and what you're looking to achieve. We'll get back to you within 48 hours.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top: 0;">
+    <div class="section-inner">
+      <div class="contact-grid">
+        <div>
+          <form id="contactForm" onsubmit="return handleFormSubmit(event)" data-netlify="true" name="Contact">
+          <div class="form-group">
+            <label>Full Name <span style="color: var(--gold);">*</span></label>
+            <input type="text" placeholder="Your name" id="formName" name="name" required>
+          </div>
+          <div class="form-group">
+            <label>Email Address <span style="color: var(--gold);">*</span></label>
+            <input type="email" placeholder="you@organization.com" id="formEmail" name="email" required>
+          </div>
+          <div class="form-group">
+            <label>Organization</label>
+            <input type="text" placeholder="Company or institution" id="formOrg" name="organization">
+          </div>
+          <div class="form-group">
+            <label>Area of Interest <span style="color: var(--gold);">*</span></label>
+            <select id="formInterest" name="interest" required>
+              <option value="">Select a practice area...</option>
+              <option>Artificial Intelligence</option>
+              <option>Automation</option>
+              <option>AI Transformation</option>
+              <option>AI Product Management</option>
+              <option>Digital Wellness</option>
+              <option>Not sure — need guidance</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Message <span style="color: var(--gold);">*</span></label>
+            <textarea placeholder="Tell us about your needs, timeline, and any specific questions..." id="formMessage" name="message" required></textarea>
+          </div>
+          <button class="btn-primary" style="width: 100%;" id="formSubmit" type="submit">Send Message</button>
+          <div id="formSuccess" style="display: none; text-align: center; padding: 40px 20px;">
+            <div style="font-size: 48px; margin-bottom: 16px;">✓</div>
+            <h3 style="font-family: var(--heading-font); font-size: 24px; margin-bottom: 12px; color: var(--gold);">Message Sent</h3>
+            <p style="color: var(--text-secondary);">Thank you for reaching out. We'll get back to you within 48 hours.</p>
+          </div>
+          </form>
+        </div>
+        <div class="contact-info">
+          <div class="contact-info-item">
+            <h4>Email</h4>
+            <p>hello@stacksandstones.com</p>
+          </div>
+          <div class="contact-info-item">
+            <h4>Location</h4>
+            <p>Abuja, Nigeria</p>
+          </div>
+          <div class="contact-info-item">
+            <h4>Upcoming Program</h4>
+            <p><strong>TINC with AI</strong> — July 25, 2026<br>Limited seats available. Reach out to reserve your spot.</p>
+          </div>
+          <div class="contact-info-item">
+            <h4>Response Time</h4>
+            <p>We respond within 48 hours. For urgent inquiries, mention it in your message.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-logo">Stacks & <span>Stones</span></div>
+      <div class="footer-links">
+        <a onclick="showPage('home')">Home</a>
+        <a onclick="showPage('about')">About</a>
+        <a onclick="showPage('services')">Services</a>
+        <a onclick="showPage('contact')">Contact</a>
+      </div>
+      <div class="footer-copy">© 2026 Stacks and Stones Consulting. All rights reserved.</div>
+    </div>
+  </footer>
+</div>
+
+<script>
+// Theme toggle
+function toggleTheme() {
+  const html = document.documentElement;
+  const isDark = html.classList.contains('theme-dark');
+  html.classList.toggle('theme-dark');
+  html.classList.toggle('theme-light');
+  const themeIcon = document.getElementById('themeIcon');
+  const themeLabel = document.getElementById('themeLabel');
+  if (isDark) {
+    themeIcon.textContent = '🌙';
+    themeLabel.textContent = 'Dark';
+    document.title = 'Stacks and Stones Consulting — Light';
+  } else {
+    themeIcon.textContent = '☀️';
+    themeLabel.textContent = 'Light';
+    document.title = 'Stacks and Stones Consulting — Dark';
+  }
+  localStorage.setItem('stacks-theme', isDark ? 'light' : 'dark');
+}
+
+// Restore saved theme
+(function() {
+  const saved = localStorage.getItem('stacks-theme');
+  const html = document.documentElement;
+  if (saved === 'light') {
+    html.classList.remove('theme-dark');
+    html.classList.add('theme-light');
+    document.getElementById('themeIcon').textContent = '🌙';
+    document.getElementById('themeLabel').textContent = 'Dark';
+    document.title = 'Stacks and Stones Consulting — Light';
+  } else {
+    html.classList.add('theme-dark');
+    html.classList.remove('theme-light');
+    document.getElementById('themeIcon').textContent = '☀️';
+    document.getElementById('themeLabel').textContent = 'Light';
+    document.title = 'Stacks and Stones Consulting — Dark';
+  }
+})();
+
+// Page navigation
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  const nav = document.querySelectorAll('.nav-links a');
+  const pageMap = { home: 0, about: 1, services: 2, contact: 3 };
+  if (nav[pageMap[page]]) nav[pageMap[page]].classList.add('active');
+  document.getElementById('navLinks').classList.remove('open');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Form submission handler
+function handleFormSubmit(event) {
+  event.preventDefault();
+  const btn = document.getElementById('formSubmit');
+  const form = document.getElementById('contactForm');
+  btn.textContent = 'Sending...';
+  btn.disabled = true;
+  // Build form data for Netlify Forms
+  const formData = new URLSearchParams();
+  formData.append('form-name', 'Contact');
+  formData.append('name', document.getElementById('formName').value);
+  formData.append('email', document.getElementById('formEmail').value);
+  formData.append('organization', document.getElementById('formOrg').value);
+  formData.append('interest', document.getElementById('formInterest').value);
+  formData.append('message', document.getElementById('formMessage').value);
+  fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: formData.toString()
+  }).then(function() {
+    form.querySelectorAll('input, textarea, select, button').forEach(function(el) {
+      if (el.id !== 'formSubmit') el.style.display = 'none';
+    });
+    document.getElementById('formSuccess').style.display = 'block';
+    btn.style.display = 'none';
+  }).catch(function() {
+    btn.textContent = 'Send Message';
+    btn.disabled = false;
+    alert('Something went wrong. Please try again or email us directly.');
+  });
+}
+</script>
+</body>
+</html>
