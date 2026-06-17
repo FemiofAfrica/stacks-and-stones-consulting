@@ -516,6 +516,43 @@ html.theme-light .program-content p {
 }
 html.theme-light .program-date { font-weight: 500; }
 .program-date strong { font-weight: 600; }
+
+/* Countdown Timer */
+.countdown {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 20px;
+}
+.countdown-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 56px;
+}
+.countdown-num {
+  font-family: var(--heading-font);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--gold);
+  line-height: 1;
+}
+.countdown-label {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+.countdown-sep {
+  font-size: 24px;
+  font-weight: 300;
+  color: var(--gold);
+  margin: 0 2px 14px 2px;
+}
+html.theme-light .countdown-num { font-weight: 700; }
+html.theme-light .countdown-sep { font-weight: 400; }
+html.theme-light .countdown-label { font-weight: 500; }
 .program-visual {
   width: 200px; height: 200px;
   border: 1px solid var(--border-gold);
@@ -932,6 +969,27 @@ html.theme-light .footer-copy { font-size: 13px; }
           <h3>TINC with AI<br>Live Workshop</h3>
           <p>An intensive, hands-on workshop designed for professionals and organizations ready to master AI-powered workflows. Limited seats available.</p>
           <div class="program-date">📅 <strong>July 25, 2026</strong> — Abuja, Nigeria</div>
+          <div class="countdown">
+            <div class="countdown-item">
+              <span class="countdown-num" id="countdown-days">00</span>
+              <span class="countdown-label">Days</span>
+            </div>
+            <div class="countdown-sep">:</div>
+            <div class="countdown-item">
+              <span class="countdown-num" id="countdown-hours">00</span>
+              <span class="countdown-label">Hours</span>
+            </div>
+            <div class="countdown-sep">:</div>
+            <div class="countdown-item">
+              <span class="countdown-num" id="countdown-mins">00</span>
+              <span class="countdown-label">Mins</span>
+            </div>
+            <div class="countdown-sep">:</div>
+            <div class="countdown-item">
+              <span class="countdown-num" id="countdown-secs">00</span>
+              <span class="countdown-label">Secs</span>
+            </div>
+          </div>
         </div>
         <div class="program-visual">
           TINC<br>with AI
@@ -1189,6 +1247,32 @@ html.theme-light .footer-copy { font-size: 13px; }
 </div>
 
 <script>
+// Countdown timer — TINC with AI Workshop: July 25, 2026
+(function() {
+  var target = new Date('2026-07-25T00:00:00').getTime();
+  function tick() {
+    var now = new Date().getTime();
+    var diff = target - now;
+    if (diff <= 0) {
+      document.getElementById('countdown-days').textContent = '00';
+      document.getElementById('countdown-hours').textContent = '00';
+      document.getElementById('countdown-mins').textContent = '00';
+      document.getElementById('countdown-secs').textContent = '00';
+      return;
+    }
+    var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    var secs = Math.floor((diff % (1000 * 60)) / 1000);
+    document.getElementById('countdown-days').textContent = String(days).padStart(2, '0');
+    document.getElementById('countdown-hours').textContent = String(hours).padStart(2, '0');
+    document.getElementById('countdown-mins').textContent = String(mins).padStart(2, '0');
+    document.getElementById('countdown-secs').textContent = String(secs).padStart(2, '0');
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
+
 // Theme toggle
 function toggleTheme() {
   const html = document.documentElement;
