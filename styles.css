@@ -5,12 +5,14 @@
 
 :root {
   --bg:         #f6f4ef;
+  --bg-rgb:     246, 244, 239;
   --bg-alt:     #f0ede6;
   --surface:    #ffffff;
   --ink:        #1c1c18;
   --soft-ink:   #4a4a44;
   --muted:      #707068;
   --line:       #e0dbd0;
+  --ink-rgb:    28, 28, 24;
   --accent:     #607d6b;
   --accent-lt:  #e4ece2;
   --accent-drk: #3d5a4e;
@@ -48,9 +50,11 @@
 @media (prefers-color-scheme: dark) {
   :root {
     --bg:         #1c1c18;
+    --bg-rgb:     28, 28, 24;
     --bg-alt:     #2a2a26;
     --surface:    #2c2c26;
     --ink:        #e8e4dc;
+    --ink-rgb:    232, 228, 220;
     --soft-ink:   #a8a498;
     --muted:      #96968e;
     --line:       #4e4e4a;
@@ -203,8 +207,8 @@ body.reduce-motion *::after {
   justify-content: space-between;
   gap: 24px;
   padding: 18px clamp(20px, 4vw, 60px);
-  background: rgba(246,244,239,.82);
-  border-bottom: 1px solid rgba(28,28,24,.06);
+  background: rgba(var(--bg-rgb), .82);
+  border-bottom: 1px solid rgba(var(--ink-rgb), .06);
   backdrop-filter: blur(22px);
   transition: border-color .3s ease;
 }
@@ -299,7 +303,7 @@ body.reduce-motion *::after {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(246,244,239,.72);  /* uniform overlay — no gradient fade */
+  background: rgba(var(--bg-rgb), .72);  /* uniform overlay — no gradient fade */
   pointer-events: none;
 }
 
