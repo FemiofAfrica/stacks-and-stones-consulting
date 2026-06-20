@@ -48,7 +48,7 @@ console.log(`  → dist/script.js   (${(fs.statSync(path.join(DIST, 'script.js')
 
 // ── Assets ────────────────────────────────────────────
 console.log('Assets …');
-for (const file of ['hero-bg.jpg', 'hero-bg.webp']) {
+for (const file of ['hero-bg.jpg', 'hero-bg.webp', 'favicon.ico', 'favicon.png', 'og-image.png']) {
   const src = path.join(ROOT, file);
   if (fs.existsSync(src)) {
     fs.cpSync(src, path.join(DIST, file));
