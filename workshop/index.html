@@ -198,13 +198,16 @@
             </div>
           </div>
 
-          <!-- Q7 — Email -->
+          <!-- Q7 — Email & Phone -->
           <div class="quiz-question" data-q="7">
             <p class="quiz-qnum">Question 7 of 7</p>
             <h3 class="quiz-qtext">Where should we send your results and workshop details?</h3>
-            <p class="quiz-email-note">We'll email you the full assessment breakdown and registration link.</p>
+            <p class="quiz-email-note">We'll email you the full assessment breakdown and keep you updated. We may also call if you need help registering.</p>
             <div class="quiz-email-wrap">
-              <input type="email" class="quiz-email-input" id="quiz-email" placeholder="you@example.com" required autocomplete="email" />
+              <div class="quiz-contact-fields">
+                <input type="email" class="quiz-email-input" id="quiz-email" placeholder="Email address" required autocomplete="email" />
+                <input type="tel" class="quiz-email-input" id="quiz-phone" placeholder="Phone number (e.g., 080 XXXX XXXX)" autocomplete="tel" />
+              </div>
               <button class="btn btn--primary quiz-email-btn" id="quiz-email-btn">See my results →</button>
             </div>
           </div>

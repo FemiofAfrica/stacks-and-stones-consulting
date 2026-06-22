@@ -60,6 +60,7 @@
     const resultRecs = document.getElementById('quiz-result-recs');
     const retakeBtn = document.getElementById('quiz-retake');
     const emailInput = document.getElementById('quiz-email');
+    const phoneInput = document.getElementById('quiz-phone');
     const emailBtn = document.getElementById('quiz-email-btn');
 
     // Google Form config
@@ -71,7 +72,8 @@
       4: 'entry.502146189',    // industry
       5: 'entry.1401871249',   // team size
       6: 'entry.168774361',    // frustration
-      email: 'entry.2126477864'
+      email: 'entry.2126477864',
+      phone: 'entry.1929819026'
     };
 
     // Map quiz internal values → Google Form option labels
@@ -91,7 +93,7 @@
     let submitted = false;
 
     // Submit to Google Forms
-    const submitToGoogleForm = (email) => {
+    const submitToGoogleForm = (email, phone) => {
       const formData = new URLSearchParams();
 
       // Add each answered question
@@ -105,6 +107,11 @@
       // Add email
       if (email) {
         formData.append(ENTRY_IDS.email, email);
+      }
+
+      // Add phone if available
+      if (phone && ENTRY_IDS.phone) {
+        formData.append(ENTRY_IDS.phone, phone);
       }
 
       // Submit via fetch (CORS-friendly beacon)
@@ -224,8 +231,12 @@
         emailInput.style.borderColor = '';
         answers[7] = email;
 
+        // Get phone
+        const phone = phoneInput ? phoneInput.value.trim() : '';
+        answers.phone = phone;
+
         // Submit to Google Forms
-        submitToGoogleForm(email);
+        submitToGoogleForm(email, phone);
 
         // Show result
         setTimeout(showResult, 300);
@@ -249,6 +260,9 @@
         if (emailInput) {
           emailInput.value = '';
           emailInput.style.borderColor = '';
+        }
+        if (phoneInput) {
+          phoneInput.value = '';
         }
         resultEl.hidden = true;
         showQuestion(1);
