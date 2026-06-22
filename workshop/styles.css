@@ -304,6 +304,50 @@
 }
 .quiz-retake:hover { color: var(--ink); }
 
+/* ─── QUIZ EMAIL FIELD ─── */
+.quiz-email-note {
+  font-size: 14px;
+  color: var(--muted);
+  margin: -12px 0 24px;
+  line-height: 1.5;
+}
+.quiz-email-wrap {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+.quiz-email-input {
+  flex: 1;
+  padding: 14px 18px;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-xs);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 16px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.quiz-email-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(96,125,107,.12);
+}
+.quiz-email-input::placeholder {
+  color: var(--muted);
+}
+.quiz-email-btn {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+@media (max-width: 480px) {
+  .quiz-email-wrap {
+    flex-direction: column;
+  }
+  .quiz-email-btn {
+    width: 100%;
+  }
+}
+
 /* ─── FLOW STEPS ─── */
 .ws-flow {
   background: var(--bg);

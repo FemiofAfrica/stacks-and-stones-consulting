@@ -59,15 +59,67 @@
     const resultText = document.getElementById('quiz-result-text');
     const resultRecs = document.getElementById('quiz-result-recs');
     const retakeBtn = document.getElementById('quiz-retake');
+    const emailInput = document.getElementById('quiz-email');
+    const emailBtn = document.getElementById('quiz-email-btn');
+
+    // Google Form config
+    const FORM_URL = 'https://docs.google.com/forms/d/e/1FAIpQLSfeulW8QXhS2XYI-ZIXj01CunFclaJGIDl6S0ZJpKL1-uAkfA/formResponse';
+    const ENTRY_IDS = {
+      1: 'entry.1646956508',   // hours
+      2: 'entry.2089935750',   // time sink
+      3: 'entry.1945997843',   // AI experience
+      4: 'entry.502146189',    // industry
+      5: 'entry.1401871249',   // team size
+      6: 'entry.168774361',    // frustration
+      email: 'entry.2126477864'
+    };
+
+    // Map quiz internal values → Google Form option labels
+    const VALUE_MAP = {
+      1: { '1': '<5', '2': '5-10', '3': '10-20', '4': '20+' },
+      2: { 'customer': 'Customer service', 'admin': 'Admin', 'finance': 'Finance', 'content': 'Content', 'other': 'Other' },
+      3: { 'none': 'Never tried', 'tried': 'Tried but couldn\'t stick', 'occasional': 'Occasional', 'regular': 'Regular' },
+      4: { 'retail': 'Retail/E-commerce', 'professional': 'Professional Services', 'tech': 'Tech/Fintech', 'nonprofit': 'NGO', 'other': 'Other' },
+      5: { 'solo': 'Solo', 'small': '2-10', 'medium': '11-50', 'enterprise': '50+' },
+      6: { 'time': 'Time wasted', 'errors': 'Errors', 'tools': 'Wrong tools', 'knowledge': 'Don\'t know how to apply' }
+    };
 
     // Store answers
     const answers = {};
-    const totalQs = questions.length;
+    const totalQs = questions.length; // 7
     let currentQ = 1;
+    let submitted = false;
+
+    // Submit to Google Forms
+    const submitToGoogleForm = (email) => {
+      const formData = new URLSearchParams();
+
+      // Add each answered question
+      for (let q = 1; q <= 6; q++) {
+        const val = answers[q];
+        if (val && VALUE_MAP[q] && VALUE_MAP[q][val]) {
+          formData.append(ENTRY_IDS[q], VALUE_MAP[q][val]);
+        }
+      }
+
+      // Add email
+      if (email) {
+        formData.append(ENTRY_IDS.email, email);
+      }
+
+      // Submit via fetch (CORS-friendly beacon)
+      fetch(FORM_URL, {
+        method: 'POST',
+        mode: 'no-cors',  // Google Forms doesn't support CORS; we fire and forget
+        body: formData
+      }).catch(() => {
+        // Silent fail — Google Forms no-cors returns opaque response
+      });
+    };
 
     // Result profiles
     const getResult = (answers) => {
-      const hours = answers['1'] || 1;
+      const hours = parseInt(answers['1']) || 1;
       const aiExp = answers['3'] || 'none';
       const frustration = answers['6'] || 'time';
       const industry = answers['4'] || 'other';
@@ -115,6 +167,11 @@
       const progress = ((num - 1) / totalQs) * 100;
       if (progressBar) progressBar.style.width = progress + '%';
       currentQ = num;
+
+      // Focus email field when reaching Q7
+      if (num === 7 && emailInput) {
+        setTimeout(() => emailInput.focus(), 300);
+      }
     };
 
     const showResult = () => {
@@ -130,14 +187,14 @@
       result.recs.forEach((rec, i) => {
         const p = document.createElement('p');
         p.className = 'quiz-result-rec';
-        p.innerHTML = `<strong>${i + 1}.</strong> ${rec}`;
+        p.innerHTML = '<strong>' + (i + 1) + '.</strong> ' + rec;
         resultRecs.appendChild(p);
       });
 
       resultEl.hidden = false;
     };
 
-    // Handle option clicks
+    // Handle option clicks (Q1–Q6)
     quiz.querySelectorAll('.quiz-opt').forEach((btn) => {
       btn.addEventListener('click', () => {
         const questionEl = btn.closest('.quiz-question');
@@ -150,15 +207,38 @@
         // Store answer
         answers[qNum] = btn.dataset.value;
 
-        if (qNum < totalQs) {
-          // Next question
-          setTimeout(() => showQuestion(qNum + 1), 250);
-        } else {
-          // Show result
-          setTimeout(showResult, 400);
-        }
+        // Auto-advance
+        setTimeout(() => showQuestion(qNum + 1), 250);
       });
     });
+
+    // Handle email submission (Q7)
+    if (emailBtn && emailInput) {
+      const submitEmail = () => {
+        const email = emailInput.value.trim();
+        if (!email || !email.includes('@')) {
+          emailInput.focus();
+          emailInput.style.borderColor = '#b58268'; // terracotta error
+          return;
+        }
+        emailInput.style.borderColor = '';
+        answers[7] = email;
+
+        // Submit to Google Forms
+        submitToGoogleForm(email);
+
+        // Show result
+        setTimeout(showResult, 300);
+      };
+
+      emailBtn.addEventListener('click', submitEmail);
+      emailInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          submitEmail();
+        }
+      });
+    }
 
     // Retake
     if (retakeBtn) {
@@ -166,6 +246,10 @@
         // Reset all
         Object.keys(answers).forEach((k) => delete answers[k]);
         quiz.querySelectorAll('.quiz-opt').forEach((opt) => opt.classList.remove('selected'));
+        if (emailInput) {
+          emailInput.value = '';
+          emailInput.style.borderColor = '';
+        }
         resultEl.hidden = true;
         showQuestion(1);
       });
@@ -176,13 +260,6 @@
   }
 
   /* ─── FAQ ACCORDION ─── */
-  document.querySelectorAll('.ws-faq-item').forEach((item) => {
-    const summary = item.querySelector('summary');
-    if (summary) {
-      summary.addEventListener('click', (e) => {
-        // Allow default toggling, just prevent double-firing
-      });
-    }
-  });
+  // Already works natively with <details>/<summary>
 
 })();
