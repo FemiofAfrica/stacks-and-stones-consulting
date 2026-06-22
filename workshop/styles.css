@@ -1,0 +1,716 @@
+/* ═══════════════════════════════════════
+   AI AUTOMATION WORKSHOP — Styles
+   Inherits design system from ../styles.css
+   ═══════════════════════════════════════ */
+
+/* ─── WORKSHOP HEADER ─── */
+.ws-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 14px clamp(20px, 4vw, 60px);
+  background: rgba(var(--bg-rgb), .88);
+  border-bottom: 1px solid rgba(var(--ink-rgb), .06);
+  backdrop-filter: blur(22px);
+  transition: border-color .3s ease, background .3s ease;
+}
+.ws-header.scrolled {
+  border-color: var(--line);
+  background: rgba(var(--bg-rgb), .95);
+}
+.ws-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  letter-spacing: -.04em;
+  font-size: 14px;
+}
+.ws-nav {
+  display: flex;
+  gap: 24px;
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--soft-ink);
+}
+.ws-nav a {
+  position: relative;
+  transition: color .2s ease;
+}
+.ws-nav a:hover { color: var(--accent); }
+.ws-nav-cta { display: none; }
+@media (min-width: 640px) {
+  .ws-nav-cta { display: inline-flex; }
+}
+
+/* ─── HERO ─── */
+.ws-hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 120px clamp(20px, 5vw, 80px) 80px;
+  overflow: hidden;
+  background: var(--bg);
+}
+.ws-hero-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 30%, rgba(96,125,107,.12), transparent),
+    radial-gradient(ellipse 60% 50% at 80% 70%, rgba(201,184,154,.08), transparent);
+  pointer-events: none;
+}
+.ws-hero-pattern {
+  position: absolute;
+  inset: 0;
+  opacity: .025;
+  background-image:
+    linear-gradient(var(--accent) 1px, transparent 1px),
+    linear-gradient(90deg, var(--accent) 1px, transparent 1px);
+  background-size: 56px 56px;
+  pointer-events: none;
+}
+.ws-hero-inner {
+  position: relative;
+  max-width: 720px;
+  text-align: center;
+}
+.ws-eyebrow {
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: .12em;
+  margin-bottom: 20px;
+}
+.ws-title {
+  font-size: clamp(40px, 7vw, 80px);
+  line-height: .9;
+  letter-spacing: -.07em;
+  font-weight: 900;
+  margin-bottom: 24px;
+}
+.ws-hero-text {
+  font-size: 18px;
+  line-height: 1.65;
+  color: var(--soft-ink);
+  max-width: 580px;
+  margin: 0 auto 36px;
+}
+.ws-hero-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 40px;
+}
+.ws-hero-strip {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-size: 14px;
+  color: var(--muted);
+}
+.ws-hero-strip strong {
+  color: var(--ink);
+  font-weight: 700;
+}
+.ws-hero-dot {
+  color: var(--line);
+  font-weight: 700;
+}
+
+/* ─── SECTION COMMON ─── */
+.ws-section {
+  padding: 100px clamp(20px, 5vw, 80px);
+  position: relative;
+}
+.ws-section-inner {
+  max-width: 820px;
+  margin: 0 auto;
+}
+.ws-section .section-heading {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 56px;
+}
+
+/* ─── AI AUDIT QUIZ ─── */
+.ws-audit {
+  background: var(--bg-alt);
+}
+.quiz-container {
+  max-width: 580px;
+  margin: 0 auto;
+}
+.quiz-progress {
+  height: 4px;
+  background: var(--line);
+  border-radius: 4px;
+  margin-bottom: 40px;
+  overflow: hidden;
+}
+.quiz-progress-bar {
+  height: 100%;
+  width: 0;
+  background: var(--accent);
+  border-radius: 4px;
+  transition: width .5s ease;
+}
+.quiz-question {
+  display: none;
+  animation: quizFadeIn .4s ease;
+}
+.quiz-question.active {
+  display: block;
+}
+@keyframes quizFadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.quiz-qnum {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+.quiz-qtext {
+  font-size: 22px;
+  line-height: 1.3;
+  letter-spacing: -.03em;
+  font-weight: 700;
+  margin-bottom: 28px;
+}
+.quiz-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.quiz-opt {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 16px 20px;
+  border: 1.5px solid var(--line);
+  border-radius: var(--radius-xs);
+  background: var(--surface);
+  color: var(--ink);
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
+  font-family: inherit;
+}
+.quiz-opt:hover {
+  border-color: var(--accent);
+  background: var(--accent-lt);
+  box-shadow: 0 2px 8px rgba(96,125,107,.1);
+}
+.quiz-opt:active {
+  transform: scale(.99);
+}
+.quiz-opt.selected {
+  border-color: var(--accent);
+  background: var(--accent-lt);
+  box-shadow: 0 0 0 2px rgba(96,125,107,.15);
+}
+
+/* Quiz Result */
+.quiz-result {
+  animation: quizFadeIn .5s ease;
+}
+.quiz-result-inner {
+  text-align: center;
+  padding: 48px 32px;
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow);
+}
+.quiz-result-icon {
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+.quiz-result-title {
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.quiz-result-score {
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 16px;
+  letter-spacing: .05em;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.quiz-result-text {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--soft-ink);
+  max-width: 480px;
+  margin: 0 auto 20px;
+}
+.quiz-result-recs {
+  margin-bottom: 28px;
+}
+.quiz-result-rec {
+  font-size: 14px;
+  padding: 8px 0;
+  color: var(--soft-ink);
+}
+.quiz-result-rec strong {
+  color: var(--accent-drk);
+}
+.quiz-result-cta {
+  padding: 28px;
+  background: var(--bg-alt);
+  border-radius: var(--radius-sm);
+  margin-bottom: 16px;
+}
+.quiz-result-cta-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 16px;
+}
+.quiz-result-sub {
+  margin-top: 12px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.quiz-result-sub a {
+  color: var(--accent);
+  text-decoration: underline;
+}
+.quiz-retake {
+  background: none;
+  border: none;
+  color: var(--muted);
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+  text-decoration: underline;
+  transition: color .2s;
+}
+.quiz-retake:hover { color: var(--ink); }
+
+/* ─── FLOW STEPS ─── */
+.ws-flow {
+  background: var(--bg);
+}
+.ws-flow-steps {
+  max-width: 600px;
+  margin: 0 auto;
+}
+.ws-step {
+  display: flex;
+  gap: 24px;
+  padding: 24px 0;
+  position: relative;
+}
+.ws-step + .ws-step {
+  border-top: 1px solid var(--line);
+}
+.ws-step-num {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent-lt);
+  color: var(--accent-drk);
+  font-size: 14px;
+  font-weight: 800;
+}
+.ws-step-body h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+.ws-step-body p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--soft-ink);
+  margin: 0;
+}
+.ws-step-date {
+  font-weight: 600;
+  color: var(--accent) !important;
+  margin-bottom: 4px !important;
+}
+
+/* ─── WHAT YOU'LL BUILD ─── */
+.ws-build {
+  background: var(--bg-alt);
+}
+.ws-build-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 50% 50% at 50% 30%, rgba(96,125,107,.06), transparent);
+  pointer-events: none;
+}
+.ws-build-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  margin-bottom: 56px;
+}
+.ws-build-card {
+  padding: 32px 24px;
+  background: var(--surface);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow .3s ease, transform .3s ease;
+}
+.ws-build-card:hover {
+  box-shadow: var(--shadow);
+  transform: translateY(-4px);
+}
+.ws-build-icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-xs);
+  background: var(--accent-lt);
+  color: var(--accent-drk);
+  margin-bottom: 16px;
+}
+.ws-build-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+.ws-build-card p {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--soft-ink);
+  margin: 0;
+}
+.ws-build-includes {
+  text-align: center;
+  max-width: 500px;
+  margin: 0 auto;
+}
+.ws-includes-list {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0 0;
+  text-align: left;
+}
+.ws-includes-list li {
+  padding: 10px 0 10px 32px;
+  position: relative;
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--soft-ink);
+  border-bottom: 1px solid var(--line);
+}
+.ws-includes-list li:last-child { border-bottom: none; }
+.ws-includes-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 800;
+}
+
+/* ─── WHO IT'S FOR ─── */
+.ws-for-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 16px;
+  max-width: 640px;
+  margin: 0 auto 24px;
+}
+.ws-for-card {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 20px;
+  background: var(--surface);
+  border-radius: var(--radius-xs);
+  box-shadow: var(--shadow-sm);
+}
+.ws-for-check {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 12px;
+  font-weight: 800;
+}
+.ws-for-card p {
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--soft-ink);
+  margin: 0;
+}
+.ws-for-note {
+  text-align: center;
+  font-size: 15px;
+  color: var(--ink);
+  max-width: 480px;
+  margin: 0 auto !important;
+}
+
+/* ─── PRICING / REGISTER ─── */
+.ws-register {
+  background: var(--bg);
+}
+.ws-register-bg {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 50% 60%, rgba(201,184,154,.08), transparent);
+  pointer-events: none;
+}
+.ws-register-inner .section-heading {
+  margin-bottom: 40px;
+}
+.ws-pricing {
+  display: flex;
+  justify-content: center;
+}
+.ws-pricing-card {
+  max-width: 420px;
+  width: 100%;
+  padding: 40px 32px;
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow);
+  text-align: center;
+  position: relative;
+}
+.ws-pricing-featured {
+  border: 2px solid var(--accent);
+}
+.ws-pricing-badge {
+  display: inline-block;
+  padding: 6px 18px;
+  border-radius: 999px;
+  background: var(--accent-lt);
+  color: var(--accent-drk);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.ws-pricing-amount {
+  margin-bottom: 28px;
+}
+.ws-pricing-currency {
+  font-size: 28px;
+  font-weight: 800;
+  vertical-align: top;
+  color: var(--muted);
+}
+.ws-pricing-num {
+  font-size: 56px;
+  font-weight: 900;
+  letter-spacing: -.06em;
+  line-height: 1;
+}
+.ws-pricing-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px;
+  text-align: left;
+}
+.ws-pricing-list li {
+  padding: 10px 0 10px 28px;
+  position: relative;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--soft-ink);
+  border-bottom: 1px solid var(--line);
+}
+.ws-pricing-list li:last-child { border-bottom: none; }
+.ws-pricing-list li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 800;
+}
+.ws-pricing-cta {
+  width: 100%;
+}
+.ws-register-note {
+  text-align: center;
+  max-width: 520px;
+  margin: 28px auto 0 !important;
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+/* ─── FAQ ─── */
+.ws-faq {
+  background: var(--bg-alt);
+}
+.ws-faq-list {
+  max-width: 640px;
+  margin: 0 auto;
+}
+.ws-faq-item {
+  border-bottom: 1px solid var(--line);
+  padding: 0;
+}
+.ws-faq-item summary {
+  padding: 20px 0;
+  font-size: 16px;
+  font-weight: 650;
+  cursor: pointer;
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: color .2s;
+}
+.ws-faq-item summary:hover {
+  color: var(--accent);
+}
+.ws-faq-item summary::after {
+  content: "+";
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--muted);
+  transition: transform .3s ease;
+}
+.ws-faq-item[open] summary::after {
+  content: "−";
+}
+.ws-faq-item p {
+  padding: 0 0 20px;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--soft-ink);
+}
+
+/* ─── FOOTER ─── */
+.ws-footer {
+  padding: 48px clamp(20px, 5vw, 80px);
+  background: var(--bg);
+  border-top: 1px solid var(--line);
+}
+.ws-footer-inner {
+  max-width: 820px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  text-align: center;
+}
+.ws-footer-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 800;
+  font-size: 14px;
+  letter-spacing: -.04em;
+  margin-bottom: 4px;
+}
+.ws-footer-text {
+  font-size: 13px;
+  color: var(--muted);
+  margin: 0;
+}
+.ws-footer-links {
+  display: flex;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--soft-ink);
+}
+.ws-footer-links a {
+  color: var(--accent);
+  transition: color .2s;
+}
+.ws-footer-links a:hover { color: var(--accent-drk); }
+.ws-footer-dot { color: var(--line); }
+.ws-footer-copy {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ─── SCROLL REVEAL (override main) ─── */
+.ws-section .reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.ws-section .reveal.delay-1 { transition-delay: .12s; }
+.ws-section .reveal.delay-2 { transition-delay: .24s; }
+.ws-section .reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+body.reduce-motion .ws-section .reveal {
+  opacity: 1;
+  transform: none;
+}
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 600px) {
+  .ws-header {
+    padding: 12px 16px;
+  }
+  .ws-nav {
+    gap: 16px;
+    font-size: 12px;
+  }
+  .ws-hero {
+    min-height: auto;
+    padding: 100px 20px 60px;
+  }
+  .ws-hero-actions {
+    flex-direction: column;
+    align-items: center;
+  }
+  .ws-section {
+    padding: 60px 20px;
+  }
+  .ws-section .section-heading {
+    margin-bottom: 36px;
+  }
+  .ws-quiz-text {
+    font-size: 18px;
+  }
+  .ws-build-grid {
+    grid-template-columns: 1fr;
+  }
+  .ws-for-grid {
+    grid-template-columns: 1fr;
+  }
+  .ws-pricing-card {
+    padding: 28px 20px;
+  }
+  .ws-pricing-num {
+    font-size: 40px;
+  }
+  .quiz-result-inner {
+    padding: 32px 20px;
+  }
+  .quiz-result-cta {
+    padding: 20px;
+  }
+}

@@ -56,4 +56,51 @@ for (const file of ['hero-bg.jpg', 'hero-bg.webp', 'favicon.ico', 'favicon.png',
   }
 }
 
+// ── Workshop ─────────────────────────────────────────
+console.log('Workshop …');
+const WS = path.join(ROOT, 'workshop');
+if (fs.existsSync(WS)) {
+  const WS_DIST = path.join(DIST, 'workshop');
+  fs.mkdirSync(WS_DIST, { recursive: true });
+
+  // Workshop HTML
+  let wsHtml = fs.readFileSync(path.join(WS, 'index.html'), 'utf8');
+  wsHtml = wsHtml.replace(/<!--[\s\S]*?-->/g, '');
+  wsHtml = wsHtml.replace(/>\s{2,}</g, '> <');
+  wsHtml = wsHtml.replace(/\n\s{2,}/g, '\n');
+  wsHtml = wsHtml.replace(/\n{3,}/g, '\n');
+  wsHtml = wsHtml.split('\n').map(l => l.trim()).join('\n');
+  fs.writeFileSync(path.join(WS_DIST, 'index.html'), wsHtml);
+  console.log(`  → dist/workshop/index.html  (${(Buffer.byteLength(wsHtml) / 1024).toFixed(1)} KB)`);
+
+  // Workshop CSS
+  const wsCss = fs.readFileSync(path.join(WS, 'styles.css'), 'utf8');
+  const wsCssResult = lightningcss.transform({
+    filename: 'workshop/styles.css',
+    code: Buffer.from(wsCss),
+    minify: true,
+    targets: {
+      safari: (16 << 16) | (4 << 8),
+      chrome: (110 << 16),
+      firefox: (110 << 16),
+    },
+  });
+  fs.writeFileSync(path.join(WS_DIST, 'styles.css'), wsCssResult.code);
+  const wsCssSaved = ((wsCss.length - wsCssResult.code.length) / wsCss.length * 100).toFixed(0);
+  console.log(`  → dist/workshop/styles.css  (${(wsCssResult.code.length / 1024).toFixed(1)} KB, -${wsCssSaved}%)`);
+
+  // Workshop JS
+  fs.cpSync(path.join(WS, 'script.js'), path.join(WS_DIST, 'script.js'));
+  console.log(`  → dist/workshop/script.js   (${(fs.statSync(path.join(WS_DIST, 'script.js')).size / 1024).toFixed(1)} KB)`);
+
+  // Workshop assets (OG image, etc.)
+  for (const file of ['og-workshop.png']) {
+    const src = path.join(WS, file);
+    if (fs.existsSync(src)) {
+      fs.cpSync(src, path.join(WS_DIST, file));
+      console.log(`  → dist/workshop/${file}`);
+    }
+  }
+}
+
 console.log('\n✓ Build complete');
