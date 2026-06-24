@@ -47,6 +47,8 @@
   --reveal-dur: .7s;
 }
 
+/* ═══ DARK MODE — disabled until ready ═══ */
+/*
 @media (prefers-color-scheme: dark) {
   :root {
     --bg:         #1c1c18;
@@ -67,6 +69,7 @@
     --shadow-lg:  0 40px 90px rgba(0,0,0,.5);
   }
 }
+*/
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
