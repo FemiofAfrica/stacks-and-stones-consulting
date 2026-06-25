@@ -47,7 +47,7 @@
   });
 
   /* ═══════════════════════════════════════
-     AI CAPABILITY AUDIT QUIZ
+     MANUAL SYSTEMS AUDIT QUIZ (8 questions)
      ═══════════════════════════════════════ */
   const quiz = document.getElementById('quiz');
   if (quiz) {
@@ -65,7 +65,7 @@
 
     // Store answers
     const answers = {};
-    const totalQs = questions.length; // 7
+    const totalQs = questions.length; // 8
     let currentQ = 1;
 
     // n8n webhook (primary — update URL once Railway n8n is deployed)
@@ -86,23 +86,24 @@
     const VALUE_MAP = {
       1: { '1': '<5', '2': '5-10', '3': '10-20', '4': '20+' },
       2: { 'customer': 'Customer service', 'admin': 'Admin', 'finance': 'Finance', 'content': 'Content', 'other': 'Other' },
-      3: { 'none': 'Never tried', 'tried': 'Tried but couldn\'t stick', 'occasional': 'Occasional', 'regular': 'Regular' },
-      4: { 'retail': 'Retail/E-commerce', 'professional': 'Professional Services', 'tech': 'Tech/Fintech', 'nonprofit': 'NGO', 'other': 'Other' },
-      5: { 'solo': 'Solo', 'small': '2-10', 'medium': '11-50', 'enterprise': '50+' },
-      6: { 'time': 'Time wasted', 'errors': 'Errors', 'tools': 'Wrong tools', 'knowledge': 'Don\'t know how to apply' }
+      3: { 'mostly-manual': 'Almost everything manual', 'mix': 'Mix manual/automated', 'mostly-auto': 'Some core systems automated', 'pipeline-minded': 'Actively builds pipelines' },
+      4: { 'none': 'Never tried', 'tried': 'Tried but couldn\'t stick', 'occasional': 'Occasional', 'regular': 'Regular' },
+      5: { 'retail': 'Retail/E-commerce', 'professional': 'Professional Services', 'tech': 'Tech/Fintech', 'nonprofit': 'NGO', 'other': 'Other' },
+      6: { 'solo': 'Solo', 'small': '2-10', 'medium': '11-50', 'enterprise': '50+' },
+      7: { 'time': 'Time wasted', 'errors': 'Errors', 'tools': 'Wrong tools', 'knowledge': 'Don\'t know how to apply' }
     };
 
     // Build payload for n8n
     const buildPayload = (email, phone) => {
-      const q4Map = { 'retail': 'Retail/E-commerce', 'professional': 'Professional Services', 'tech': 'Tech/Fintech', 'nonprofit': 'NGO', 'other': 'Other' };
-      const q5Map = { 'solo': 'Solo', 'small': '2-10', 'medium': '11-50', 'enterprise': '50+' };
-      const q6Map = { 'time': 'Time wasted', 'errors': 'Errors', 'tools': 'Wrong tools', 'knowledge': 'Don\'t know how to apply' };
+      const q5Map = { 'retail': 'Retail/E-commerce', 'professional': 'Professional Services', 'tech': 'Tech/Fintech', 'nonprofit': 'NGO', 'other': 'Other' };
+      const q6Map = { 'solo': 'Solo', 'small': '2-10', 'medium': '11-50', 'enterprise': '50+' };
+      const q7Map = { 'time': 'Time wasted', 'errors': 'Errors', 'tools': 'Wrong tools', 'knowledge': 'Don\'t know how to apply' };
       return {
         email: email,
         phone: phone || '',
-        industry: q4Map[answers['4']] || '',
-        teamSize: q5Map[answers['5']] || '',
-        frustration: q6Map[answers['6']] || '',
+        industry: q5Map[answers['5']] || '',
+        teamSize: q6Map[answers['6']] || '',
+        frustration: q7Map[answers['7']] || '',
         leadName: email.split('@')[0] || 'Lead',
       };
     };
@@ -119,7 +120,7 @@
     // Submit to Google Forms (no-cors fallback)
     const submitToGoogleForm = (email, phone) => {
       var fd = new URLSearchParams();
-      for (var q = 1; q <= 6; q++) {
+      for (var q = 1; q <= 7; q++) {
         var val = answers[q];
         if (val && VALUE_MAP[q] && VALUE_MAP[q][val]) {
           fd.append(ENTRY_IDS[q], VALUE_MAP[q][val]);
@@ -133,41 +134,44 @@
     // Result profiles
     const getResult = (answers) => {
       const hours = parseInt(answers['1']) || 1;
-      const aiExp = answers['3'] || 'none';
-      const frustration = answers['6'] || 'time';
-      const industry = answers['4'] || 'other';
+      const autoVsManual = answers['3'] || 'mix';        // Q3: automation vs manual
+      const aiExp = answers['4'] || 'none';               // Q4: AI experience (was old Q3)
+      const frustration = answers['7'] || 'time';          // Q7: frustration (was old Q6)
+      const industry = answers['5'] || 'other';            // Q5: industry (was old Q4)
 
       let readiness = 0;
       if (hours >= 3) readiness += 2;
       if (hours >= 2) readiness += 1;
+      if (autoVsManual === 'mostly-manual' || autoVsManual === 'mix') readiness += 2;
+      if (autoVsManual === 'pipeline-minded') readiness -= 1;
       if (aiExp === 'none' || aiExp === 'tried') readiness += 1;
       if (aiExp === 'regular') readiness -= 1;
 
       let profile, text, recs;
 
       if (readiness >= 3) {
-        profile = 'High Potential, Low System';
-        text = 'You\'re spending serious time on manual work and haven\'t found the right AI approach yet. That means the biggest gains are still sitting on the table — and you\'ll see dramatic results from even one or two automated workflows. The workshop is designed for exactly this.';
+        profile = 'High Potential, Low Pipeline';
+        text = 'You\'re spending serious time on manual work and haven\'t found the right approach yet. That means the biggest gains are still sitting on the table — and you\'ll see dramatic results from automating even one or two manual systems. The workshop is designed for exactly this.';
         recs = [
-          'You\'ll start with the highest-impact workflow for your industry',
-          'Bring a specific task — we\'ll automate it live',
+          'You\'ll start with the highest-impact pipeline for your industry',
+          'Bring a specific manual task — we\'ll automate it live',
           'The sales/operations track is likely your biggest win'
         ];
       } else if (readiness >= 2) {
         profile = 'Aware, Exploring';
-        text = 'You know AI can help and you\'ve dabbled, but you haven\'t built anything systematic. The workshop bridges that gap — you\'ll leave with working automations, not just ideas.';
+        text = 'You know automation can help and you\'ve dabbled, but you haven\'t built anything systematic. The workshop bridges that gap — you\'ll leave with working pipelines, not just ideas.';
         recs = [
           'Pick the track that matches your biggest time sink',
           'The content/marketing track is great for quick wins',
           'Your peer match will help you spot patterns you missed'
         ];
       } else {
-        profile = 'Ready to Start';
-        text = 'You\'re already using AI in some form — but the workshop will take you from occasional use to systematic automation. You\'ll build workflows that run without you.';
+        profile = 'Ready to Level Up';
+        text = 'You\'re already running some automated systems — but the workshop will take you from occasional automation to systematic pipelines. You\'ll build workflows that run without you.';
         recs = [
           'The finance/admin track will save you the most hours',
-          'Your peer will benefit from your AI familiarity',
-          'Focus on automating the tasks you still do manually'
+          'Your peer will benefit from your automation familiarity',
+          'Focus on automating the manual tasks you still do by hand'
         ];
       }
 
@@ -181,7 +185,7 @@
       var pct = ((num - 1) / totalQs) * 100;
       if (progressBar) progressBar.style.width = pct + '%';
       currentQ = num;
-      if (num === 7 && emailInput) {
+      if (num === 8 && emailInput) {
         setTimeout(function() { emailInput.focus(); }, 300);
       }
     };
@@ -190,7 +194,7 @@
       questions.forEach(function(q) { q.classList.remove('active'); });
       if (progressBar) progressBar.style.width = '100%';
       var result = getResult(answers);
-      resultTitle.textContent = 'Your AI Automation Readiness';
+      resultTitle.textContent = 'Your Pipeline Readiness';
       resultScore.textContent = result.profile;
       resultText.textContent = result.text;
       resultRecs.innerHTML = '';
@@ -203,7 +207,7 @@
       resultEl.hidden = false;
     };
 
-    // Handle option clicks (Q1–Q6)
+    // Handle option clicks (Q1–Q7)
     quiz.querySelectorAll('.quiz-opt').forEach(function(btn) {
       btn.addEventListener('click', function() {
         var qEl = btn.closest('.quiz-question');
@@ -215,7 +219,7 @@
       });
     });
 
-    // Handle email/phone submission (Q7)
+    // Handle email/phone submission (Q8)
     if (emailBtn && emailInput) {
       var submitEmail = function() {
         var email = emailInput.value.trim();
@@ -225,7 +229,7 @@
           return;
         }
         emailInput.style.borderColor = '';
-        answers[7] = email;
+        answers[8] = email;
         var phone = phoneInput ? phoneInput.value.trim() : '';
         answers.phone = phone;
 
