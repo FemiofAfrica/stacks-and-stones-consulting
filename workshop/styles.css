@@ -64,8 +64,8 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 80% 60% at 20% 30%, rgba(96,125,107,.12), transparent),
-    radial-gradient(ellipse 60% 50% at 80% 70%, rgba(201,184,154,.08), transparent);
+    radial-gradient(ellipse 80% 60% at 20% 30%, rgba(11,61,43,.12), transparent),
+    radial-gradient(ellipse 60% 50% at 80% 70%, rgba(212,171,79,.08), transparent);
   pointer-events: none;
 }
 .ws-hero-pattern {
@@ -214,16 +214,17 @@
 }
 .quiz-opt:hover {
   border-color: var(--accent);
-  background: var(--accent-lt);
-  box-shadow: 0 2px 8px rgba(96,125,107,.1);
+  background: rgba(11,61,43,.06);
+  box-shadow: 0 2px 8px rgba(11,61,43,.08);
 }
 .quiz-opt:active {
   transform: scale(.99);
 }
 .quiz-opt.selected {
   border-color: var(--accent);
-  background: var(--accent-lt);
-  box-shadow: 0 0 0 2px rgba(96,125,107,.15);
+  background: var(--accent-drk);
+  color: #f0ece4;
+  box-shadow: 0 0 0 2px rgba(11,61,43,.15);
 }
 
 /* Quiz Result */
@@ -337,7 +338,7 @@
 }
 .quiz-email-input:focus {
   border-color: var(--accent);
-  box-shadow: 0 0 0 3px rgba(96,125,107,.12);
+  box-shadow: 0 0 0 3px rgba(11,61,43,.12);
 }
 .quiz-email-input::placeholder {
   color: var(--muted);
@@ -379,8 +380,8 @@
   display: grid;
   place-items: center;
   border-radius: 50%;
-  background: var(--accent-lt);
-  color: var(--accent-drk);
+  background: var(--accent-drk);
+  color: #f0ece4;
   font-size: 14px;
   font-weight: 800;
 }
@@ -409,7 +410,7 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 50% 50% at 50% 30%, rgba(96,125,107,.06), transparent);
+    radial-gradient(ellipse 50% 50% at 50% 30%, rgba(11,61,43,.06), transparent);
   pointer-events: none;
 }
 .ws-build-grid {
@@ -419,15 +420,16 @@
   margin-bottom: 56px;
 }
 .ws-build-card {
-  padding: 32px 24px;
-  background: var(--surface);
+  padding: 28px 26px;
   border-radius: var(--radius-sm);
-  box-shadow: var(--shadow-sm);
-  transition: box-shadow .3s ease, transform .3s ease;
+  background: var(--surface);
+  border: 1px solid rgba(212,171,79,.15);
+  transition: transform .35s ease, box-shadow .35s ease, border-color .3s ease;
 }
 .ws-build-card:hover {
-  box-shadow: var(--shadow);
   transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,.08);
+  border-color: var(--accent);
 }
 .ws-build-icon {
   width: 48px;
@@ -435,8 +437,8 @@
   display: grid;
   place-items: center;
   border-radius: var(--radius-xs);
-  background: var(--accent-lt);
-  color: var(--accent-drk);
+  background: var(--accent-drk);
+  color: #f0ece4;
   margin-bottom: 16px;
 }
 .ws-build-card h3 {
@@ -556,8 +558,8 @@
   display: inline-block;
   padding: 6px 18px;
   border-radius: 999px;
-  background: var(--accent-lt);
-  color: var(--accent-drk);
+  background: var(--accent-drk);
+  color: #f0ece4;
   font-size: 12px;
   font-weight: 700;
   letter-spacing: .08em;
