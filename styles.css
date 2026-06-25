@@ -4,19 +4,19 @@
    ═══════════════════════════════════════ */
 
 :root {
-  --bg:         #f6f4ef;
-  --bg-rgb:     246, 244, 239;
-  --bg-alt:     #f0ede6;
+  --bg:         #f1efe2;
+  --bg-rgb:     241, 239, 226;
+  --bg-alt:     #eceade;
   --surface:    #ffffff;
   --ink:        #1c1c18;
   --soft-ink:   #4a4a44;
   --muted:      #707068;
-  --line:       #e0dbd0;
+  --line:       #d4ab4f;
   --ink-rgb:    28, 28, 24;
-  --accent:     #607d6b;
-  --accent-lt:  #e4ece2;
-  --accent-drk: #3d5a4e;
-  --warm:       #c9b89a;
+  --accent:     #0b3d2b;
+  --accent-lt:  #dce8e0;
+  --accent-drk: #176a4e;
+  --warm:       #d4c4a0;
   --terracotta: #b58268;
 
   /* Shadows */
@@ -148,9 +148,9 @@ p { color: var(--soft-ink); line-height: 1.65; }
 .btn--primary {
   background: var(--accent);
   color: white;
-  box-shadow: 0 14px 30px rgba(93,122,110,.20);
+  box-shadow: 0 14px 30px rgba(11,61,43,.20);
 }
-.btn--primary:hover { box-shadow: 0 18px 38px rgba(93,122,110,.28); }
+.btn--primary:hover { box-shadow: 0 18px 38px rgba(11,61,43,.28); }
 .btn--outline {
   background: transparent;
   color: var(--ink);
