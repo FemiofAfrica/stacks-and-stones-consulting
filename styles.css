@@ -1092,7 +1092,7 @@ body.reduce-motion *::after {
 .perspectives-bg {
   position: absolute;
   inset: 0;
-  background: var(--surface);
+  background: var(--bg-alt);
 }
 .perspectives .pattern-grid { opacity: .025; }
 .perspectives-grid {
